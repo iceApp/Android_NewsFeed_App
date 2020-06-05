@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NewsFeed</string>
+
+    <string name="search_word">検索ワード</string>
+</resources>

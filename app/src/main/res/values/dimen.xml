@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="news_item_title_padding">12dp</dimen>
+    <dimen name="news_item_publish_day_padding">8dp</dimen>
+
+</resources>
