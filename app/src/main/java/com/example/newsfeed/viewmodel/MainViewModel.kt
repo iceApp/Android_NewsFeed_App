@@ -1,8 +1,41 @@
 package com.example.newsfeed.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.*
+import com.example.newsfeed.Repository.NewsRepository
+import com.example.newsfeed.data.News
+import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
+
+    private val repository: NewsRepository by lazy {
+        NewsRepository(app)
+    }
+
+//    // パターン１
+//    var newsList = MutableLiveData<List<News>>()
+//    fun getNews(searchWord: String) {
+//        searchWord?.let {
+//            viewModelScope.launch {
+//                newsList.value = repository.getNews(searchWord)
+//            }
+//        }
+//    }
+
+    //パターン２
+    private val searchWord = MutableLiveData<String>()
+    fun getNews(word: String){
+        searchWord.value = word
+    }
+    val newsList: LiveData<List<News>> = Transformations.switchMap(searchWord){ word ->
+        word?.let {
+            liveData {
+                emit(repository.getNews(it))
+            }
+
+        }
+    }
+
+
 
 }
