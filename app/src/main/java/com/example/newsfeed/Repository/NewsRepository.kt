@@ -18,24 +18,41 @@ class NewsRepository(private val context: Context) {
 
     suspend fun getNews(searchWord: String ): List<News>{
         var returnList = emptyList<News>()
-        try {
-            val response = newsApiService.getNews(searchWord)
-            loadStatus.value = LoadStatus.LOADING
+        loadStatus.value = LoadStatus.LOADING
+
+        runCatching {
+            newsApiService.getNews(searchWord)
+        }.onSuccess { response ->
             if (response.isSuccessful){
-                loadStatus.value = LoadStatus.DONE
                 returnList = response.body()!!.newsList
+                loadStatus.value = LoadStatus.DONE
             } else {
                 loadStatus.value = LoadStatus.ERROR
-                makeToast(context, response.message())
+                makeToast(context, response.message().toString())
             }
-
-        } catch (e: Throwable){
+        }.onFailure { e ->
             loadStatus.value = LoadStatus.ERROR
             makeToast(context, "Exception: ${e.message}")
         }
+
         return returnList
 
-
+//        // try{}
+//        try {
+//            val response = newsApiService.getNews(searchWord)
+//            loadStatus.value = LoadStatus.LOADING
+//            if (response.isSuccessful){
+//                loadStatus.value = LoadStatus.DONE
+//                returnList = response.body()!!.newsList
+//            } else {
+//                loadStatus.value = LoadStatus.ERROR
+//                makeToast(context, response.message())
+//            }
+//
+//        } catch (e: Throwable){
+//            loadStatus.value = LoadStatus.ERROR
+//            makeToast(context, "Exception: ${e.message}")
+//        }
     }
 
 }
