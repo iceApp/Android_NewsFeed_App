@@ -1,7 +1,6 @@
-package com.example.newsfeed.Repository
+package com.example.newsfeed.repository
 
 import android.content.Context
-import android.icu.text.StringSearch
 import androidx.lifecycle.MutableLiveData
 import com.example.newsfeed.data.News
 import com.example.newsfeed.networking.NewsApiService

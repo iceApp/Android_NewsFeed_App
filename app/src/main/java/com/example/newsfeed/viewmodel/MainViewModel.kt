@@ -2,9 +2,8 @@ package com.example.newsfeed.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.newsfeed.Repository.NewsRepository
+import com.example.newsfeed.repository.NewsRepository
 import com.example.newsfeed.data.News
-import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
