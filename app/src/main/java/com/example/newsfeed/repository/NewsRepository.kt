@@ -13,25 +13,25 @@ class NewsRepository(private val context: Context) {
         NewsApiService.creatApiService()
     }
 
-    val loadStatus = MutableLiveData<LoadStatus>()
+    val isLoading = MutableLiveData<Boolean>()
 
     suspend fun getNews(searchWord: String ): List<News>{
         var returnList = emptyList<News>()
-        loadStatus.value = LoadStatus.LOADING
+        isLoading.postValue(true)
 
         runCatching {
             newsApiService.getNews(searchWord)
         }.onSuccess { response ->
             if (response.isSuccessful){
                 returnList = response.body()!!.newsList
-                loadStatus.value = LoadStatus.DONE
             } else {
-                loadStatus.value = LoadStatus.ERROR
                 makeToast(context, response.message().toString())
             }
+            isLoading.postValue(false)
+
         }.onFailure { e ->
-            loadStatus.value = LoadStatus.ERROR
             makeToast(context, "Exception: ${e.message}")
+            isLoading.postValue(false)
         }
 
         return returnList

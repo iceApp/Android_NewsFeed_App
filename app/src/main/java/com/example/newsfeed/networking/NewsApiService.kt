@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface NewsApiService {
 
     companion object {
-        const val BASE_URL = "https://newsapi.org/v2"
+        const val BASE_URL = "https://newsapi.org/v2/"
         const val API_KEY = "1876c9cc626741beafa49b52240b0af2"
 
         fun creatApiService(): NewsApiService{
@@ -21,6 +21,7 @@ interface NewsApiService {
                 .add(KotlinJsonAdapterFactory())
                 .build()
             return Retrofit.Builder()
+                .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
                 .create(NewsApiService::class.java)

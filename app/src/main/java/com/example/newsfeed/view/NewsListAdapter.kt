@@ -1,15 +1,17 @@
-package com.example.newsfeed.ui
+package com.example.newsfeed.view
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.newsfeed.R
 import com.example.newsfeed.data.News
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.news_item.*
 
-class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
+class NewsListAdapter(private val activity: Activity): RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     var newsList: List<News> = emptyList()
 
@@ -27,7 +29,9 @@ class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val selectedNews = newsList[position]
 
-        // TODO 画像のセット
+        selectedNews.imageUrl.let {
+            Glide.with(activity).load(selectedNews.imageUrl).into(holder.imgNewsHeader)
+        }
 
         holder.apply {
             txtNewsTitle.text = selectedNews.title
