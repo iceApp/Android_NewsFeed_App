@@ -26,10 +26,6 @@ class MainFragment(app: Application): Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentMainBinding
 
-    private val repository: NewsRepository by lazy {
-        NewsRepository(app)
-    }
-
     private val newsAdapter: NewsListAdapter by lazy {
         NewsListAdapter(requireActivity())
     }
@@ -50,7 +46,7 @@ class MainFragment(app: Application): Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.apply {
-            viewModel = viewModel
+            viewmodel = viewModel
             lifecycleOwner = activity
         }
         viewModel.initParameters()
@@ -75,15 +71,5 @@ class MainFragment(app: Application): Fragment() {
             }
             newsAdapter.notifyDataSetChanged()
         })
-
-        viewModel.getState().observe(requireActivity(), Observer { isLoading ->
-            isLoading.let {
-                // TODO 2回目以降の検索でprogressBarが表示されない
-                progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-            }
-            Log.d("isLoading",isLoading.toString() + "isLoading -------------------------------")
-        })
-
-
     }
 }

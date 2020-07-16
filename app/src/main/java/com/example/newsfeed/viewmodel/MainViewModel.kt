@@ -29,10 +29,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     //パターン２
     val searchWord = MutableLiveData<String>()
-    val isLoading = MutableLiveData<Boolean>()
-//    val isLoading: LiveData<Boolean> = Transformations.switchMap(repository.isLoading){
-//         repository.isLoading
-//        }
 
     fun getNews(word: String){
         searchWord.value = word
@@ -49,6 +45,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    val isLoading: LiveData<MutableLiveData<Boolean>> = Transformations.map(repository.isLoading){
+        repository.isLoading
+    }
 
 
 }
