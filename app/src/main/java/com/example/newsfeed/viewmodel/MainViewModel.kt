@@ -40,7 +40,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     val newsList: LiveData<List<News>> = Transformations.switchMap(searchWord){ word ->
         word?.let {
             liveData {
-                emit(repository.getNews(it))
+                repository.getNews(it)
+                emitSource(repository.allNews)
+                //emit(repository.getNews(it))
             }
         }
     }

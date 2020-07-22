@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 /**
  * A simple [Fragment] subclass.
  */
-class MainFragment(app: Application): Fragment() {
+class MainFragment(): Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentMainBinding
