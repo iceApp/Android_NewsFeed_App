@@ -1,6 +1,8 @@
 package com.example.newsfeed.view
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +39,10 @@ class NewsListAdapter(private val activity: Activity): RecyclerView.Adapter<News
             txtNewsTitle.text = selectedNews.title
             txtPublishDate.text = selectedNews.publishData
             txtDesc.text = selectedNews.description
+        }
+
+        holder.itemView.setOnClickListener {
+            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(selectedNews.url)))
         }
     }
 }
